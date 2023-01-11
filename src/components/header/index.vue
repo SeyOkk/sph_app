@@ -27,7 +27,7 @@
     <div class="bottom">
       <h1 class="logoArea">
         <router-link to="/home" class="logo">
-          <img src="./images/logo.png" alt="" />
+          <img src="@/assets/images/logo.png" alt="" />
         </router-link>
       </h1>
       <div class="searchArea">
