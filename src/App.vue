@@ -4,8 +4,8 @@
     <Header></Header>
     <!-- 路由组件 -->
     <router-view/>
-    <!-- 底部组件 -->
-    <Footer></Footer>
+    <!-- 底部组件 根据路由元信息判断是否展示组件-->
+    <Footer v-show="$route.meta.isFooterShow"></Footer>
   </div>
 </template>
 
