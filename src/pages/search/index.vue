@@ -1,9 +1,17 @@
 <template>
-  <div>搜索页</div>
+  <div>
+    <TypeNav />
+
+    <SearchContainer />
+  </div>
 </template>
 
 <script>
-export default {};
+import SearchContainer from "./SearchContainer";
+export default {
+  components: { SearchContainer },
+  name: "Search",
+};
 </script>
 
-<style></style>
+<style lang="less" scoped></style>
