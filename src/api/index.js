@@ -1,6 +1,6 @@
 import axios from "axios";
 import nProgress from "nprogress";
-import "nprogress/nprogress.css"
+import "nprogress/nprogress.css";
 
 const request = axios.create({
   baseURL: "/api",
@@ -28,6 +28,7 @@ request.interceptors.response.use(
     }
   },
   (error) => {
+    nProgress.done();
     console.log("请求失败：", error);
   }
 );
