@@ -14,13 +14,21 @@
       </nav>
       <div class="sort">
         <div class="all-sort-list2">
-          <div v-for="category in categoryList" :key="category.categoryId" class="item bo">
+          <div
+            v-for="category in categoryList"
+            :key="category.categoryId"
+            class="item bo"
+          >
             <h3>
               <a href="">{{ category.categoryName }}</a>
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
-                <dl v-for="child in category.categoryChild" :key="child.categoryId" class="fore">
+                <dl
+                  v-for="child in category.categoryChild"
+                  :key="child.categoryId"
+                  class="fore"
+                >
                   <dt>
                     <a href="">{{ child.categoryName }} </a>
                   </dt>
