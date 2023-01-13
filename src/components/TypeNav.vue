@@ -1,7 +1,38 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <h2 class="all">全部商品分类</h2>
+      <div @mouseleave="leaveHandler" @mouseenter="enterHandler">
+        <h2 class="all">全部商品分类</h2>
+        <transition>
+          <div v-show="show" class="sort">
+            <div @click="routeJump" class="all-sort-list2">
+              <div v-for="(c1, index) in categoryList" :key="c1.categoryId" class="item">
+                <h3 @mouseenter="activeSelected(index)" :class="{ active: index === currentIndex }">
+                  <a :data-category-name="c1.categoryName" :data-category-id_1="c1.categoryId">{{ c1.categoryName }}</a>
+                </h3>
+                <div class="item-list clearfix">
+                  <div class="subitem">
+                    <dl v-for="c2 in c1.categoryChild" :key="c2.categoryId" class="fore">
+                      <dt>
+                        <a :data-category-name="c2.categoryName" :data-category-id_2="c2.categoryId"
+                          >{{ c2.categoryName }}
+                        </a>
+                      </dt>
+                      <dd>
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a :data-category-name="c3.categoryName" :data-category-id_3="c3.categoryId"
+                            >{{ c3.categoryName }}
+                          </a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
       <nav class="nav">
         <a href="###">服装城</a>
         <a href="###">美妆馆</a>
@@ -12,38 +43,23 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
-        <div class="all-sort-list2">
-          <div v-for="category in categoryList" :key="category.categoryId" class="item bo">
-            <h3>
-              <a href="">{{ category.categoryName }}</a>
-            </h3>
-            <div class="item-list clearfix">
-              <div class="subitem">
-                <dl v-for="child in category.categoryChild" :key="child.categoryId" class="fore">
-                  <dt>
-                    <a href="">{{ child.categoryName }} </a>
-                  </dt>
-                  <dd>
-                    <em v-for="c in child.categoryChild" :key="c.categoryId">
-                      <a href="">{{ c.categoryName }} </a>
-                    </em>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import throttle from "lodash/throttle";
 
 export default {
   name: "TypeNav",
+  data() {
+    return {
+      currentIndex: -1,
+      show: true,
+      routeName: this.$route.name,
+    };
+  },
   computed: {
     ...mapState({
       // 使用对象写法，右侧需要返回一个函数
@@ -51,7 +67,53 @@ export default {
     }),
   },
   created() {
-    this.$store.dispatch("getCategoryList");
+    // 判断路由
+    if (this.routeName === "search") {
+      this.show = false;
+    }
+  },
+  methods: {
+    // 使用节流函数,throttle函数不要用箭头函数，否则this指向将不再是vc实例
+    activeSelected: throttle(function (index) {
+      this.currentIndex = index;
+    }, 50),
+    routeJump(event) {
+      const data = event.target.dataset;
+      if (data.categoryName) {
+        // 说明点击的就是目标路由跳转元素
+        let location = { name: "search" };
+        let query = { categoryName: data.categoryName };
+        if (data.categoryId_1) {
+          // 一级菜单
+          query.category1Id = data.categoryId_1;
+        } else if (data.categoryId_2) {
+          // 二级菜单
+          query.category2Id = data.categoryId_2;
+        } else {
+          // 三级菜单
+          query.category3Id = data.categoryId_3;
+        }
+        // 判断路由上 params参数是否存在
+        if (this.$route.params) {
+          location.params = this.$route.params;
+        }
+        // 合并请求参数
+        location.query = query;
+        this.$router.push(location);
+      }
+    },
+    enterHandler() {
+      if (this.routeName === "search") {
+        this.show = true;
+      }
+    },
+    leaveHandler() {
+      this.currentIndex = -1;
+      // 判断路由
+      if (this.routeName === "search") {
+        this.show = false;
+      }
+    },
   },
 };
 </script>
@@ -110,6 +172,10 @@ export default {
             a {
               color: #333;
             }
+          }
+
+          .active {
+            background-color: #e1251b;
           }
 
           .item-list {
@@ -173,6 +239,19 @@ export default {
           }
         }
       }
+    }
+
+    // 过渡动画css需要写在 v-show/v-if指令 所在的class属性下方
+    .v-enter {
+      height: 0;
+    }
+
+    .v-enter-to {
+      height: 461px;
+    }
+
+    .v-enter-active {
+      transition: all 0.3s linear;
     }
   }
 }

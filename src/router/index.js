@@ -11,7 +11,12 @@ VueRouter.prototype.push = function (localtion, resovle, reject) {
   if (resovle && reject) {
     originPush.call(this, localtion, resovle, reject);
   } else {
-    originPush.call(this, localtion, () => {}, () => {})
+    originPush.call(
+      this,
+      localtion,
+      () => {},
+      () => {}
+    );
   }
 };
 
@@ -19,7 +24,12 @@ VueRouter.prototype.replace = function (localtion, resovle, reject) {
   if (resovle && reject) {
     originReplace.call(this, localtion, resovle, reject);
   } else {
-    originReplace.call(this, localtion, () => {}, () => {})
+    originReplace.call(
+      this,
+      localtion,
+      () => {},
+      () => {}
+    );
   }
 };
 
@@ -39,32 +49,33 @@ export default new VueRouter({
       path: "/home",
       component: Home,
       meta: {
-        isFooterShow: true
-      }
+        isFooterShow: true,
+      },
     },
     {
       name: "login",
       path: "/login",
       component: Login,
       meta: {
-        isFooterShow: false
-      }
+        isFooterShow: false,
+      },
     },
     {
       name: "register",
       path: "/register",
       component: Register,
       meta: {
-        isFooterShow: false
-      }
+        isFooterShow: false,
+      },
     },
     {
       name: "search",
-      path: "/search",
+      // :keyword? 表示params参数 keyword 非必传
+      path: `/search/:keyword?`,
       component: Search,
       meta: {
-        isFooterShow: true
-      }
+        isFooterShow: true,
+      },
     },
   ],
 });
