@@ -14,6 +14,10 @@ const vm = new Vue({
   render: (h) => h(App),
   router,
   store,
+  beforeCreate() {
+    // 原型对象上挂载事件总线
+    Vue.prototype.$bus = this;
+  },
 }).$mount("#app");
 
 console.log(vm);
