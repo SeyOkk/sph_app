@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex"
+
 import Header from "./components/header";
 import Footer from "./components/footer";
 
@@ -19,12 +21,23 @@ export default {
     Header,
     Footer,
   },
+  methods: {
+    ...mapActions(["getCategoryList", "getBanners", "getFloors"])
+  },
   created() {
     // 调用三级分类数据接口放在APP根组件处调用，这只会调用一次，
     // 没必要每次实例化进行三级分类组件时调用，提升性能
-    this.$store.dispatch("getCategoryList");
+    // this.$store.dispatch("getCategoryList");
+    this.getCategoryList()
+    this.getBanners()
+    this.getFloors()
   },
 };
 </script>
 
-<style></style>
+<style>
+/* 全局引入轮播图样式*/
+@import "swiper/css/swiper.min.css";
+
+
+</style>
