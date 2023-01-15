@@ -48,6 +48,10 @@ export default {
       keyword: "",
     };
   },
+  mounted() {
+    // 绑定全局事件
+    this.$bus.$on("resetKeyword", () => this.keyword = "")
+  },
   methods: {
     toSearch() {
       let location = {
@@ -62,7 +66,7 @@ export default {
         location.query = this.$route.query;
       }
       this.$router.push(location);
-    },
+    }
   },
 };
 </script>

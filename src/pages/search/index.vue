@@ -11,15 +11,35 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-show="searchQuery.categoryName">
+              {{ searchQuery.categoryName }}
+              <i @click="removeCategoryName">×</i>
+            </li>
+            <li class="with-x" v-show="searchQuery.keyword">
+              {{ searchQuery.keyword }} <i @click="removeKeyword">×</i>
+            </li>
+            <li class="with-x" v-show="searchQuery.trademark">
+              {{ searchQuery.trademark.split(":")[1] }}
+              <i @click="removeTrademark">×</i>
+            </li>
+            <li
+              class="with-x"
+              v-show="searchQuery.props"
+              v-for="(prop, index) in searchQuery.props"
+              :key="index"
+            >
+              {{ prop.split(":")[1] }} <i @click="removeAttr(index)">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <Selector :trademark-list="searchData.trademarkList" :attrs-list="searchData.attrsList" />
+        <Selector
+          @searchTrademark="searchTrademark"
+          @searchAttrValue="searchAttrValue"
+          :trademark-list="searchData.trademarkList"
+          :attrs-list="searchData.attrsList"
+        />
 
         <div class="sui-navbar">
           <div class="navbar-inner filter">
@@ -139,7 +159,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 
 import Selector from "@/pages/search/Selector";
 import GoodsList from "@/pages/search/GoodsList";
@@ -150,40 +170,83 @@ export default {
   data() {
     return {
       searchQuery: {
-        "category1Id": "",
-        "category2Id": "",
-        "category3Id": "",
-        "categoryName": "",
-        "keyword": "",
-        "order": "",
-        "pageNo": 1,
-        "pageSize": 10,
-        "props": [],
-        "trademark": ""
-      }
-    }
+        category1Id: "",
+        category2Id: "",
+        category3Id: "",
+        categoryName: "",
+        keyword: "",
+        order: "",
+        pageNo: 1,
+        pageSize: 10,
+        props: [],
+        trademark: "",
+      },
+    };
   },
   computed: {
-    ...mapState({searchData: state => state.search.searchData})
+    ...mapState({ searchData: (state) => state.search.searchData }),
   },
   mounted() {
-    this.getSearchData()
+    this.getSearchData();
+  },
+  watch: {
+    // 监听路由是否发生变化
+    $route() {
+      this.getSearchData();
+    },
   },
   methods: {
     getSearchData() {
-      Object.assign(this.searchQuery, this.$route.query, this.$route.params)
-      this.$store.dispatch("getSearchData", this.searchQuery)
-      this.searchQuery.category1Id = ""
-      this.searchQuery.category2Id = ""
-      this.searchQuery.category3Id = ""
-    }
+      Object.assign(this.searchQuery, this.$route.query, this.$route.params);
+      this.$store.dispatch("getSearchData", this.searchQuery);
+      this.searchQuery.category1Id = undefined;
+      this.searchQuery.category2Id = undefined;
+      this.searchQuery.category3Id = undefined;
+    },
+    removeCategoryName() {
+      this.searchQuery.categoryName = undefined;
+      this.searchQuery.category1Id = undefined;
+      this.searchQuery.category2Id = undefined;
+      this.searchQuery.category3Id = undefined;
+      // 路由query参数置空
+      this.$router.push({
+        name: "search",
+        query: {},
+        params: this.$route.params,
+      });
+    },
+    removeKeyword() {
+      this.searchQuery.keyword = undefined;
+      // 发送全局事件bus，通知搜索框将keyword置空
+      this.$bus.$emit("resetKeyword");
+      // 路由params参数置空
+      this.$router.push({
+        name: "search",
+        query: this.$route.query,
+        params: {},
+      });
+    },
+    removeTrademark() {
+      this.searchQuery.trademark = "";
+      this.getSearchData();
+    },
+    removeAttr(index) {
+      // 删除对应下标的元素
+      this.searchQuery.props.splice(index, 1);
+      this.getSearchData();
+    },
+    searchTrademark(data) {
+      this.searchQuery.trademark = data;
+      this.getSearchData();
+    },
+    searchAttrValue(data) {
+      // 对props进行去重
+      if (this.searchQuery.props.indexOf(data) === -1) {
+        this.searchQuery.props.push(data);
+        this.getSearchData();
+      }
+    },
   },
-  watch: {
-    $route() {
-      this.getSearchData()
-    }
-  }
-
 };
 </script>
 
