@@ -3,7 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <carousel :banners="banners" />
+        <Carousel :banners="banners" />
       </div>
       <div class="right">
         <div class="news">

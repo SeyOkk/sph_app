@@ -1,8 +1,21 @@
-const state = {};
+import { getSearchData } from "@/api/search";
 
-const mutations = {};
+const state = {
+  searchData: {},
+};
 
-const actions = {};
+const mutations = {
+  GET_SEARCH_DATA(state, payload) {
+    state.searchData = payload
+  }
+};
+
+const actions = {
+  async getSearchData({ commit }, data = {}) {
+    let result = await getSearchData(data);
+    commit("GET_SEARCH_DATA", result)
+  },
+};
 
 const getters = {};
 

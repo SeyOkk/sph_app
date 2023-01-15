@@ -30,6 +30,7 @@ export default {
       immediate: true,
       handler() {
         this.$nextTick(() => {
+          console.log("sssss", this.banners)
           new Swiper(this.$refs.swiper, {
             // direction: 'vertical', // 垂直播放图片，默认水平播放
             loop: true,
