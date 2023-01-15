@@ -3,16 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 // 引入mock数据
-import "./mock/MockServer"
-
-import TypeNav from "@/components/TypeNav";
-import Carousel from "@/components/Carousel";
+import "./mock/MockServer";
+// 引入全局组件
+import "@/components/ComponentRegister";
 
 Vue.config.productionTip = false;
-
-// 将TypeNav三级分类组件注册为全局组件
-Vue.component("TypeNav", TypeNav);
-Vue.component("Carousel", Carousel)
 
 new Vue({
   render: (h) => h(App),

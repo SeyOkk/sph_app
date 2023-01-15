@@ -44,23 +44,29 @@
         <div class="sui-navbar">
           <div class="navbar-inner filter">
             <ul class="sui-nav">
-              <li class="active">
-                <a href="#">综合</a>
+              <li :class="{ active: isTopOrder }" @click="orderTab('1')">
+                <a href="javascript:void(0);"
+                  >综合
+                  <i
+                    class="iconfont"
+                    :class="{
+                      'icon-shang--jiantou': isTopOrder & isAsc,
+                      'icon-xia--jiantou': isTopOrder & isDesc,
+                    }"
+                  ></i>
+                </a>
               </li>
-              <li>
-                <a href="#">销量</a>
-              </li>
-              <li>
-                <a href="#">新品</a>
-              </li>
-              <li>
-                <a href="#">评价</a>
-              </li>
-              <li>
-                <a href="#">价格⬆</a>
-              </li>
-              <li>
-                <a href="#">价格⬇</a>
+              <li :class="{ active: isPriceOrder }" @click="orderTab('2')">
+                <a href="javascript:void(0);"
+                  >价格
+                  <i
+                    class="iconfont"
+                    :class="{
+                      'icon-shang--jiantou': isPriceOrder & isAsc,
+                      'icon-xia--jiantou': isPriceOrder & isDesc,
+                    }"
+                  ></i
+                ></a>
               </li>
             </ul>
           </div>
@@ -68,6 +74,9 @@
 
         <!--details-->
         <GoodsList :goodsList="searchData.goodsList" />
+
+        <!-- 引入分页组件 -->
+        <Pagenation />
 
         <!--hotsale-->
         <div class="clearfix hot-sale">
@@ -175,7 +184,7 @@ export default {
         category3Id: "",
         categoryName: "",
         keyword: "",
-        order: "",
+        order: "1:desc",
         pageNo: 1,
         pageSize: 10,
         props: [],
@@ -185,6 +194,18 @@ export default {
   },
   computed: {
     ...mapState({ searchData: (state) => state.search.searchData }),
+    isTopOrder() {
+      return this.searchQuery.order.split(":")[0] === "1";
+    },
+    isPriceOrder() {
+      return this.searchQuery.order.split(":")[0] === "2";
+    },
+    isAsc() {
+      return this.searchQuery.order.split(":")[1] === "asc";
+    },
+    isDesc() {
+      return this.searchQuery.order.split(":")[1] === "desc";
+    },
   },
   mounted() {
     this.getSearchData();
@@ -245,6 +266,21 @@ export default {
         this.searchQuery.props.push(data);
         this.getSearchData();
       }
+    },
+    // 排序tab切换
+    orderTab(newVal) {
+      const orderArr = this.searchQuery.order.split(":");
+      if (newVal !== orderArr[0]) {
+        this.searchQuery.order = `${newVal}:desc`;
+      } else {
+        // 切换排序
+        if (orderArr[1] === "asc") {
+          this.searchQuery.order = `${orderArr[0]}:desc`;
+        } else {
+          this.searchQuery.order = `${orderArr[0]}:asc`;
+        }
+      }
+      this.getSearchData()
     },
   },
 };
@@ -330,6 +366,12 @@ export default {
           display: block;
           float: left;
           margin: 0 10px 0 0;
+          .icon-shang--jiantou {
+            font-size: 13px;
+          }
+          .icon-xia--jiantou {
+            font-size: 13px;
+          }
           li {
             float: left;
             line-height: 18px;
