@@ -1,34 +1,27 @@
 <template>
-  <div class="fr page">
+  <div v-if="total !== 0" class="fr page">
     <div class="sui-pagination clearfix">
       <ul>
-        <li class="prev disabled">
+        <li v-show="pageNo > 1" class="prev disabled" @click="clickPrePage">
           <a href="javascript:void(0);">«上一页</a>
         </li>
-        <li>
-          <a href="#">1</a>
+
+        <li
+          v-for="(item, index) in pageItems"
+          :key="index"
+          @click="clickPage(item)"
+          :class="{ active: pageNo === item }"
+        >
+          <a href="javascript:void(0);"> {{ item }} </a>
         </li>
-        <li>
-          <a href="#">2</a>
-        </li>
-        <li>
-          <a href="#">3</a>
-        </li>
-        <li>
-          <a href="#">4</a>
-        </li>
-        <li>
-          <a href="#">5</a>
-        </li>
-        <li>
-          <a href="#">尾页</a>
-        </li>
-        <li class="dotted"><span>...</span></li>
-        <li class="next">
+
+        <li class="next" v-show="pageNo < totalPage" @click="clickNextPage">
           <a href="javascript:void(0);">下一页»</a>
         </li>
       </ul>
-      <div class="total-page"><span>共 {{totalPage}} 页&nbsp;</span></div>
+      <div class="total-page">
+        <span>共 {{ totalPage }} 页&nbsp;</span>
+      </div>
     </div>
   </div>
 </template>
@@ -39,30 +32,90 @@ export default {
   props: {
     pageNo: {
       type: Number,
-      default: 1
+      default: 1,
     },
     pageSize: {
       type: Number,
-      default: 10
+      default: 10,
     },
-    totalPage: {
+    total: {
       type: Number,
-      default: 0
-    }
+      // default: 0,
+    },
   },
   data() {
     return {
-
-    }
+      // 分页元素连续数组
+      pageItems: [],
+    };
   },
   computed: {
-    startIndex() {
-      if (this.totalPage - this.pageNo >= 5) {
-        //
+    // 计算当前总计多少页
+    totalPage() {
+      return this.total % this.pageSize === 0 ? this.total / this.pageSize : Math.floor(this.total / this.pageSize) + 1;
+    },
+  },
+  watch: {
+    total() {
+      this.handlerPage();
+    },
+    pageNo() {
+      this.handlerPage();
+    },
+  },
+  methods: {
+    handlerPage() {
+      // 清空pageItems
+      this.pageItems = [];
+      if (this.totalPage < 8) {
+        // 直接分页元素放入pageItems中
+        for (let i = 1; i <= this.totalPage; i++) {
+          this.pageItems.push(i);
+        }
       } else {
+        if (this.pageNo < 5) {
+          for (let i = 1; i <= 6; i++) {
+            this.pageItems.push(i);
+          }
+          this.pageItems.push("...");
+          this.pageItems.push(this.totalPage);
+        } else {
+          if (this.pageNo + 3 < this.totalPage) {
+            this.pageItems.push(1);
+            this.pageItems.push("...");
+
+            for (let j = this.pageNo - 2; j <= this.pageNo + 2; j++) {
+              this.pageItems.push(j);
+            }
+
+            this.pageItems.push("...");
+            this.pageItems.push(this.totalPage);
+          } else {
+            this.pageItems.push(1);
+            this.pageItems.push("...");
+            for (let k = this.totalPage - 5; k <= this.totalPage; k++) {
+              this.pageItems.push(k);
+            }
+          }
+        }
       }
-    }
-  }
+    },
+    clickPage(pageNum) {
+      if (typeof pageNum === "number") {
+        this.$emit("pageNoChange", pageNum);
+      }
+    },
+    clickPrePage() {
+      if (this.pageNo > 1) {
+        this.$emit("pageNoPre");
+      }
+    },
+    clickNextPage() {
+      if (this.pageNo < this.totalPage) {
+        this.$emit("pageNoNext");
+      }
+    },
+  },
 };
 </script>
 
@@ -78,9 +131,10 @@ export default {
     margin: 13px 0;
     ul {
       margin-left: 0;
+      margin-right: 20px;
       margin-bottom: 0;
       vertical-align: middle;
-      width: 490px;
+      // width: 490px;
       float: left;
       li {
         margin-left: 5px;
@@ -144,7 +198,6 @@ export default {
       height: 100%;
       color: #333;
       font-size: 14px;
-      width: 241px;
     }
   }
 }

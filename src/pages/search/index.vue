@@ -22,12 +22,7 @@
               {{ searchQuery.trademark.split(":")[1] }}
               <i @click="removeTrademark">×</i>
             </li>
-            <li
-              class="with-x"
-              v-show="searchQuery.props"
-              v-for="(prop, index) in searchQuery.props"
-              :key="index"
-            >
+            <li class="with-x" v-show="searchQuery.props" v-for="(prop, index) in searchQuery.props" :key="index">
               {{ prop.split(":")[1] }} <i @click="removeAttr(index)">×</i>
             </li>
           </ul>
@@ -76,7 +71,14 @@
         <GoodsList :goodsList="searchData.goodsList" />
 
         <!-- 引入分页组件 -->
-        <Pagination />
+        <Pagination
+          @pageNoChange="pageNoChange"
+          @pageNoPre="pageNoPre"
+          @pageNoNext="pageNoNext"
+          :pageNo="searchData.pageNo"
+          :pageSize="searchData.pageSize"
+          :total="searchData.total"
+        />
 
         <!--hotsale-->
         <div class="clearfix hot-sale">
@@ -280,7 +282,19 @@ export default {
           this.searchQuery.order = `${orderArr[0]}:asc`;
         }
       }
-      this.getSearchData()
+      this.getSearchData();
+    },
+    pageNoChange(pageNo) {
+      this.searchQuery.pageNo = pageNo;
+      this.getSearchData();
+    },
+    pageNoPre() {
+      this.searchQuery.pageNo--;
+      this.getSearchData();
+    },
+    pageNoNext() {
+      this.searchQuery.pageNo++;
+      this.getSearchData();
     },
   },
 };
