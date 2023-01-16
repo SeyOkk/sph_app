@@ -3,9 +3,9 @@
     <div class="sui-pagination clearfix">
       <ul>
         <li class="prev disabled">
-          <a href="#">«上一页</a>
+          <a href="javascript:void(0);">«上一页</a>
         </li>
-        <li class="active">
+        <li>
           <a href="#">1</a>
         </li>
         <li>
@@ -20,19 +20,49 @@
         <li>
           <a href="#">5</a>
         </li>
+        <li>
+          <a href="#">尾页</a>
+        </li>
         <li class="dotted"><span>...</span></li>
         <li class="next">
-          <a href="#">下一页»</a>
+          <a href="javascript:void(0);">下一页»</a>
         </li>
       </ul>
-      <div class="total-page"><span>共10页&nbsp;</span></div>
+      <div class="total-page"><span>共 {{totalPage}} 页&nbsp;</span></div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Pagenation",
+  name: "Pagination",
+  props: {
+    pageNo: {
+      type: Number,
+      default: 1
+    },
+    pageSize: {
+      type: Number,
+      default: 10
+    },
+    totalPage: {
+      type: Number,
+      default: 0
+    }
+  },
+  data() {
+    return {
+
+    }
+  },
+  computed: {
+    startIndex() {
+      if (this.totalPage - this.pageNo >= 5) {
+        //
+      } else {
+      }
+    }
+  }
 };
 </script>
 

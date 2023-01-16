@@ -76,7 +76,7 @@
         <GoodsList :goodsList="searchData.goodsList" />
 
         <!-- 引入分页组件 -->
-        <Pagenation />
+        <Pagination />
 
         <!--hotsale-->
         <div class="clearfix hot-sale">
