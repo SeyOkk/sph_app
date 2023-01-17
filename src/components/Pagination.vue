@@ -52,8 +52,13 @@ export default {
   computed: {
     // 计算当前总计多少页
     totalPage() {
-      return this.total % this.pageSize === 0 ? this.total / this.pageSize : Math.floor(this.total / this.pageSize) + 1;
+      return this.total % this.pageSize === 0
+        ? this.total / this.pageSize
+        : Math.floor(this.total / this.pageSize) + 1;
     },
+  },
+  mounted() {
+    this.handlerPage();
   },
   watch: {
     total() {
@@ -127,8 +132,10 @@ export default {
   text-align: center;
   display: flex;
   justify-content: center;
+
   .sui-pagination {
     margin: 13px 0;
+
     ul {
       margin-left: 0;
       margin-right: 20px;
@@ -136,10 +143,12 @@ export default {
       vertical-align: middle;
       // width: 490px;
       float: left;
+
       li {
         margin-left: 5px;
         line-height: 18px;
         display: inline-block;
+
         a {
           position: relative;
           float: left;
@@ -152,6 +161,7 @@ export default {
           padding: 9px 18px;
           color: #333;
         }
+
         &.active {
           a {
             background-color: #fff;
@@ -160,17 +170,20 @@ export default {
             cursor: default;
           }
         }
+
         &.prev {
           a {
             background-color: #fafafa;
           }
         }
+
         &.disabled {
           a {
             //color: #999;
             cursor: default;
           }
         }
+
         &.dotted {
           span {
             margin-left: -1px;
@@ -185,6 +198,7 @@ export default {
             color: #333;
           }
         }
+
         &.next {
           a {
             background-color: #fafafa;
@@ -192,6 +206,7 @@ export default {
         }
       }
     }
+
     .total-page {
       display: flex;
       align-items: center;
