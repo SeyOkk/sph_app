@@ -37,6 +37,7 @@ import Home from "@/pages/home";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
 import Search from "@/pages/search";
+import Detail from "@/pages/detail";
 
 export default new VueRouter({
   routes: [
@@ -73,6 +74,14 @@ export default new VueRouter({
       // :keyword? 表示params参数 keyword 非必传
       path: `/search/:keyword?`,
       component: Search,
+      meta: {
+        isFooterShow: true,
+      },
+    },
+    {
+      name: "detail",
+      path: "/detail/:id",
+      component: Detail,
       meta: {
         isFooterShow: true,
       },
