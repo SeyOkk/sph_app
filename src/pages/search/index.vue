@@ -72,12 +72,10 @@
 
         <!-- 引入分页组件 -->
         <Pagination
-          @pageNoChange="pageNoChange"
-          @pageNoPre="pageNoPre"
-          @pageNoNext="pageNoNext"
           :pageNo="searchData.pageNo"
           :pageSize="searchData.pageSize"
           :total="searchData.total"
+          :continues="5"
         />
 
         <!--hotsale-->
@@ -187,8 +185,8 @@ export default {
         categoryName: "",
         keyword: "",
         order: "1:desc",
-        pageNo: 1,
-        pageSize: 10,
+        pageNo: 4,
+        pageSize: 2,
         props: [],
         trademark: "",
       },

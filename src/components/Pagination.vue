@@ -1,27 +1,29 @@
 <template>
-  <div v-if="total !== 0" class="fr page">
+  <div class="fr page">
     <div class="sui-pagination clearfix">
       <ul>
-        <li v-show="pageNo > 1" class="prev disabled" @click="clickPrePage">
-          <a href="javascript:void(0);">«上一页</a>
+        <li class="prev disabled">
+          <a href="#">«上一页</a>
         </li>
 
-        <li
-          v-for="(item, index) in pageItems"
-          :key="index"
-          @click="clickPage(item)"
-          :class="{ active: pageNo === item }"
-        >
-          <a href="javascript:void(0);"> {{ item }} </a>
+        <li  class="active">
+          <a href="#">1</a>
+        </li>
+        <li class="dotted"><span>...</span></li>
+        <li v-for="count in handlerContinuesPage.end" v-if="handlerContinuesPage.start <= count">
+          <a href="#"> {{count}} </a>
         </li>
 
-        <li class="next" v-show="pageNo < totalPage" @click="clickNextPage">
-          <a href="javascript:void(0);">下一页»</a>
+        <li class="dotted"><span>...</span></li>
+        <li>
+          <a href="#">5</a>
+        </li>
+
+        <li class="next">
+          <a href="#">下一页»</a>
         </li>
       </ul>
-      <div class="total-page">
-        <span>共 {{ totalPage }} 页&nbsp;</span>
-      </div>
+      <div><span>共{{totalPage}}页&nbsp;</span></div>
     </div>
   </div>
 </template>
@@ -40,71 +42,43 @@ export default {
     },
     total: {
       type: Number,
-      // default: 0,
     },
-  },
-  data() {
-    return {
-      // 分页元素连续数组
-      pageItems: [],
-    };
+    continues: {
+      type: Number,
+    },
   },
   computed: {
     // 计算当前总计多少页
     totalPage() {
-      return this.total % this.pageSize === 0
-        ? this.total / this.pageSize
-        : Math.floor(this.total / this.pageSize) + 1;
+      return this.total % this.pageSize === 0 ? this.total / this.pageSize : Math.ceil(this.total / this.pageSize);
     },
-  },
-  mounted() {
-    this.handlerPage();
-  },
-  watch: {
-    total() {
-      this.handlerPage();
-    },
-    pageNo() {
-      this.handlerPage();
-    },
-  },
-  methods: {
-    handlerPage() {
-      // 清空pageItems
-      this.pageItems = [];
-      if (this.totalPage < 8) {
-        // 直接分页元素放入pageItems中
-        for (let i = 1; i <= this.totalPage; i++) {
-          this.pageItems.push(i);
-        }
+    // 计算连续的起始和结束页码
+    handlerContinuesPage() {
+      let start = 0, end = 0
+
+      // 判断连续页码数 是否 大于 总页数
+      if (this.continues > this.totalPage) {
+        start = 1
+        end = this.totalPage
       } else {
-        if (this.pageNo < 5) {
-          for (let i = 1; i <= 6; i++) {
-            this.pageItems.push(i);
-          }
-          this.pageItems.push("...");
-          this.pageItems.push(this.totalPage);
-        } else {
-          if (this.pageNo + 3 < this.totalPage) {
-            this.pageItems.push(1);
-            this.pageItems.push("...");
-
-            for (let j = this.pageNo - 2; j <= this.pageNo + 2; j++) {
-              this.pageItems.push(j);
-            }
-
-            this.pageItems.push("...");
-            this.pageItems.push(this.totalPage);
-          } else {
-            this.pageItems.push(1);
-            this.pageItems.push("...");
-            for (let k = this.totalPage - 5; k <= this.totalPage; k++) {
-              this.pageItems.push(k);
-            }
-          }
+        const intervalCount = Math.floor(this.continues / 2)
+        start = this.pageNo - intervalCount
+        end = this.pageNo + intervalCount
+        // 处理start
+        if (start < 1) {
+          start = 1
+          end = this.continues
+        }
+        // 处理end
+        if (end > this.totalPage) {
+          end = this.totalPage
+          start = this.totalPage - this.continues
         }
       }
-    },
+      return {start, end}
+    }
+  },
+  methods: {
     clickPage(pageNum) {
       if (typeof pageNum === "number") {
         this.$emit("pageNoChange", pageNum);
