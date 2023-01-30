@@ -87,23 +87,6 @@ export default {
       return this.pageNo < this.totalPage - Math.ceil(this.continues / 2)
     }
   },
-  methods: {
-    clickPage(pageNum) {
-      if (typeof pageNum === "number") {
-        this.$emit("pageNoChange", pageNum);
-      }
-    },
-    clickPrePage() {
-      if (this.pageNo > 1) {
-        this.$emit("pageNoPre");
-      }
-    },
-    clickNextPage() {
-      if (this.pageNo < this.totalPage) {
-        this.$emit("pageNoNext");
-      }
-    },
-  },
 };
 </script>
 

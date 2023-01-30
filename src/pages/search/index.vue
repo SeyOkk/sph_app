@@ -75,7 +75,6 @@
           :pageNo="searchData.pageNo"
           :pageSize="searchData.pageSize"
           :total="searchData.total"
-          :continues="5"
           @prePage="prePage"
           @nextPage="nextPage"
           @jumpPage="jumpPage"
