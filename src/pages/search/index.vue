@@ -76,6 +76,9 @@
           :pageSize="searchData.pageSize"
           :total="searchData.total"
           :continues="5"
+          @prePage="prePage"
+          @nextPage="nextPage"
+          @jumpPage="jumpPage"
         />
 
         <!--hotsale-->
@@ -185,7 +188,7 @@ export default {
         categoryName: "",
         keyword: "",
         order: "1:desc",
-        pageNo: 4,
+        pageNo: 1,
         pageSize: 2,
         props: [],
         trademark: "",
@@ -282,15 +285,15 @@ export default {
       }
       this.getSearchData();
     },
-    pageNoChange(pageNo) {
+    jumpPage(pageNo) {
       this.searchQuery.pageNo = pageNo;
       this.getSearchData();
     },
-    pageNoPre() {
+    prePage() {
       this.searchQuery.pageNo--;
       this.getSearchData();
     },
-    pageNoNext() {
+    nextPage() {
       this.searchQuery.pageNo++;
       this.getSearchData();
     },

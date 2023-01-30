@@ -2,28 +2,30 @@
   <div class="fr page">
     <div class="sui-pagination clearfix">
       <ul>
-        <li class="prev disabled">
+        <li class="prev" @click="$emit('prePage')" v-show="pageNo !== 1">
           <a href="#">«上一页</a>
         </li>
 
-        <li  class="active">
+        <li v-if="handlerContinuesPage.start !== 1" @click="$emit('jumpPage', 1)">
           <a href="#">1</a>
         </li>
-        <li class="dotted"><span>...</span></li>
-        <li v-for="count in handlerContinuesPage.end" v-if="handlerContinuesPage.start <= count">
-          <a href="#"> {{count}} </a>
+        <li v-if="isShowFirst" class="dotted"><span>...</span></li>
+
+        <li v-for="(count, index) in handlerContinuesPage.end" :key="index"
+            v-show="handlerContinuesPage.start <= count"
+            :class="{active: pageNo === count}" @click="$emit('jumpPage', count)">
+          <a href="#"> {{ count }} </a>
         </li>
 
-        <li class="dotted"><span>...</span></li>
-        <li>
-          <a href="#">5</a>
+        <li v-if="isShowEnd" class="dotted"><span>...</span></li>
+        <li v-if="handlerContinuesPage.end !== totalPage" @click="$emit('jumpPage', totalPage)">
+          <a href="#"> {{ totalPage }} </a>
         </li>
 
-        <li class="next">
+        <li class="next" @click="$emit('nextPage')" v-show="pageNo !== totalPage">
           <a href="#">下一页»</a>
         </li>
       </ul>
-      <div><span>共{{totalPage}}页&nbsp;</span></div>
     </div>
   </div>
 </template>
@@ -45,6 +47,7 @@ export default {
     },
     continues: {
       type: Number,
+      default: 5
     },
   },
   computed: {
@@ -72,10 +75,16 @@ export default {
         // 处理end
         if (end > this.totalPage) {
           end = this.totalPage
-          start = this.totalPage - this.continues
+          start = this.totalPage - this.continues + 1
         }
       }
       return {start, end}
+    },
+    isShowFirst() {
+      return this.pageNo > Math.ceil(this.continues / 2) + 1
+    },
+    isShowEnd() {
+      return this.pageNo < this.totalPage - Math.ceil(this.continues / 2)
     }
   },
   methods: {
