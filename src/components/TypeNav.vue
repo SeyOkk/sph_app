@@ -67,8 +67,7 @@ export default {
     }),
   },
   created() {
-    // 判断路由
-    if (this.routeName === "search") {
+    if (this.$route.meta.typeNavFlag) {
       this.show = false;
     }
   },
@@ -103,14 +102,14 @@ export default {
       }
     },
     enterHandler() {
-      if (this.routeName === "search") {
+      if (this.$route.meta.typeNavFlag) {
         this.show = true;
       }
     },
     leaveHandler() {
       this.currentIndex = -1;
       // 判断路由
-      if (this.routeName === "search") {
+      if (this.$route.meta.typeNavFlag) {
         this.show = false;
       }
     },

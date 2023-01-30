@@ -5,22 +5,22 @@
         <li class="yui3-u-1-5" v-for="goods in goodsList" :key="goods.id">
           <div class="list-wrap">
             <div class="p-img">
-              <a href="item.html" target="_blank"
-                ><img :src="goods.defaultImg"
-              /></a>
+              <router-link :to="`/detail/${goods.id}`">
+                <img :src="goods.defaultImg"/>
+              </router-link>
             </div>
             <div class="price">
               <strong>
                 <em>¥</em>
-                <i>{{goods.price}}.00</i>
+                <i>{{ goods.price }}.00</i>
               </strong>
             </div>
             <div class="attr">
               <a
-                target="_blank"
-                href="item.html"
-                v-html="goods.title"
-                >
+                  target="_blank"
+                  href="item.html"
+                  v-html="goods.title"
+              >
               </a>
             </div>
             <div class="commit">
@@ -28,13 +28,13 @@
             </div>
             <div class="operate">
               <a
-                href="success-cart.html"
-                target="_blank"
-                class="sui-btn btn-bordered btn-danger"
-                >加入购物车</a
+                  href="success-cart.html"
+                  target="_blank"
+                  class="sui-btn btn-bordered btn-danger"
+              >加入购物车</a
               >
               <a href="javascript:void(0);" class="sui-btn btn-bordered"
-                >收藏</a
+              >收藏</a
               >
             </div>
           </div>
@@ -61,21 +61,26 @@ export default {
 
   .goods-list {
     margin: 20px 0;
+
     ul {
       display: flex;
       flex-wrap: wrap;
+
       li {
         height: 100%;
         width: 20%;
         margin-top: 10px;
         line-height: 28px;
+
         .list-wrap {
           .p-img {
             padding-left: 15px;
             width: 215px;
             height: 255px;
+
             a {
               color: #666;
+
               img {
                 max-width: 100%;
                 height: auto;
@@ -83,14 +88,17 @@ export default {
               }
             }
           }
+
           .price {
             padding-left: 15px;
             font-size: 18px;
             color: #c81623;
+
             strong {
               font-weight: 700;
             }
           }
+
           .attr {
             padding-left: 15px;
             width: 85%;
@@ -102,23 +110,28 @@ export default {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
+
             a {
               color: #333;
               text-decoration: none;
             }
           }
+
           .commit {
             padding-left: 15px;
             height: 22px;
             font-size: 13px;
             color: #a7a7a7;
+
             span {
               font-weight: 700;
               color: #646fb0;
             }
           }
+
           .operate {
             padding: 12px 15px;
+
             .sui-btn {
               display: inline-block;
               padding: 2px 14px;
@@ -133,11 +146,13 @@ export default {
               background-color: transparent;
               margin-right: 15px;
             }
+
             .btn-bordered {
               min-width: 85px;
               background-color: transparent;
               border: 1px solid #8c8c8c;
               color: #8c8c8c;
+
               &:hover {
                 border: 1px solid #666;
                 color: #fff !important;
@@ -145,9 +160,11 @@ export default {
                 text-decoration: none;
               }
             }
+
             .btn-danger {
               border: 1px solid #e1251b;
               color: #e1251b;
+
               &:hover {
                 border: 1px solid #e1251b;
                 background-color: #e1251b;

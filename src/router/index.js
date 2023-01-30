@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import routes from "./routes";
 
 Vue.use(VueRouter);
 
@@ -33,58 +34,9 @@ VueRouter.prototype.replace = function (localtion, resovle, reject) {
   }
 };
 
-import Home from "@/pages/home";
-import Login from "@/pages/login";
-import Register from "@/pages/register";
-import Search from "@/pages/search";
-import Detail from "@/pages/detail";
-
 export default new VueRouter({
-  routes: [
-    {
-      path: "*",
-      redirect: "/home",
-    },
-    {
-      name: "home",
-      path: "/home",
-      component: Home,
-      meta: {
-        isFooterShow: true,
-      },
-    },
-    {
-      name: "login",
-      path: "/login",
-      component: Login,
-      meta: {
-        isFooterShow: false,
-      },
-    },
-    {
-      name: "register",
-      path: "/register",
-      component: Register,
-      meta: {
-        isFooterShow: false,
-      },
-    },
-    {
-      name: "search",
-      // :keyword? 表示params参数 keyword 非必传
-      path: `/search/:keyword?`,
-      component: Search,
-      meta: {
-        isFooterShow: true,
-      },
-    },
-    {
-      name: "detail",
-      path: "/detail/:id",
-      component: Detail,
-      meta: {
-        isFooterShow: true,
-      },
-    },
-  ],
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { y: 0 };
+  },
 });
