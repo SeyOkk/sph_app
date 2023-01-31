@@ -1,9 +1,9 @@
 <template>
   <div class="spec-preview">
-    <img src="../images/s1.png" />
+    <img src="@/assets/images/detail/s1.png" />
     <div class="event"></div>
     <div class="big">
-      <img src="../images/s1.png" />
+      <img src="@/assets/images/detail/s1.png" />
     </div>
     <div class="mask"></div>
   </div>

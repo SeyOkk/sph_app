@@ -2,7 +2,7 @@
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide">
-        <img src="../images/s1.png">
+        <img src="@/assets/images/detail/s1.png">
       </div>
     </div>
     <div class="swiper-button-next"></div>

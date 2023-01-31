@@ -127,7 +127,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part01.png" />
+                    <img src="@/assets/images/detail/part01.png" />
                   </div>
                   <div class="attr">Apple苹果iPhone 6s (A1699) </div>
                   <div class="price">
@@ -142,7 +142,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part02.png" />
+                    <img src="@/assets/images/detail/part02.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -161,7 +161,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part03.png" />
+                    <img src="@/assets/images/detail/part03.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -180,7 +180,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part02.png" />
+                    <img src="@/assets/images/detail/part02.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -199,7 +199,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part03.png" />
+                    <img src="@/assets/images/detail/part03.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -227,13 +227,13 @@
           <h4 class="kt">选择搭配</h4>
           <div class="good-suits">
             <div class="master">
-              <img src="./images/l-m01.png" />
+              <img src="@/assets/images/detail/l-m01.png" />
               <p>￥5299</p>
               <i>+</i>
             </div>
             <ul class="suits">
               <li class="suitsItem">
-                <img src="./images/dp01.png" />
+                <img src="@/assets/images/detail/dp01.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
                   <input type="checkbox" value="39">
@@ -241,7 +241,7 @@
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="./images/dp02.png" />
+                <img src="@/assets/images/detail/dp02.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
                   <input type="checkbox" value="50">
@@ -249,7 +249,7 @@
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="./images/dp03.png" />
+                <img src="@/assets/images/detail/dp03.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
                   <input type="checkbox" value="59">
@@ -257,7 +257,7 @@
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="./images/dp04.png" />
+                <img src="@/assets/images/detail/dp04.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
                   <input type="checkbox" value="99">
@@ -322,9 +322,9 @@
                 <li>机身内存：64GB</li>
               </ul>
               <div class="intro-detail">
-                <img src="./images/intro01.png" />
-                <img src="./images/intro02.png" />
-                <img src="./images/intro03.png" />
+                <img src="@/assets/images/detail/intro01.png" />
+                <img src="@/assets/images/detail/intro02.png" />
+                <img src="@/assets/images/detail/intro03.png" />
               </div>
             </div>
             <div id="two" class="tab-pane">
@@ -347,8 +347,8 @@
 </template>
 
 <script>
-  import ImageList from './ImageList/ImageList'
-  import Zoom from './Zoom/Zoom'
+  import ImageList from './ImageList.vue'
+  import Zoom from './Zoom.vue'
 
   export default {
     name: 'Detail',
