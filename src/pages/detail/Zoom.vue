@@ -1,9 +1,9 @@
 <template>
   <div class="spec-preview">
-    <img src="@/assets/images/detail/s1.png" />
+    <img :src="imgUrl" />
     <div class="event"></div>
     <div class="big">
-      <img src="@/assets/images/detail/s1.png" />
+      <img :src="imgUrl" />
     </div>
     <div class="mask"></div>
   </div>
@@ -12,6 +12,7 @@
 <script>
   export default {
     name: "Zoom",
+    props: ["imgUrl"],
   }
 </script>
 
