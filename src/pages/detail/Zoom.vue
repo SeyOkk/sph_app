@@ -1,11 +1,11 @@
 <template>
   <div class="spec-preview">
     <img :src="imgUrl" />
-    <div class="event"></div>
-    <div class="big">
-      <img :src="imgUrl" />
+    <div class="event" @mousemove="mouseHandler"></div>
+    <div class="big" >
+      <img :src="imgUrl" ref="big"/>
     </div>
-    <div class="mask"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
@@ -13,6 +13,23 @@
   export default {
     name: "Zoom",
     props: ["imgUrl"],
+    methods: {
+      mouseHandler(event) {
+        let mask = this.$refs.mask
+        let big = this.$refs.big
+        let left = event.offsetX - mask.offsetWidth / 2
+        let top = event.offsetY - mask.offsetHeight / 2
+        // 限制遮罩的范围
+        if (left <= 0) left = 0
+        if (top <= 0) top = 0
+        if (left >= mask.offsetWidth) left = mask.offsetWidth
+        if (top >= mask.offsetHeight) top = mask.clientHeight
+        mask.style.left = left + "px"
+        mask.style.top = top + "px"
+        big.style.left = -2 * left +"px"
+        big.style.top = -2 * top + "px"
+      }
+    }
   }
 </script>
 

@@ -72,6 +72,7 @@
                   :class="{ active: spuItem.isChecked === '1' }"
                   v-for="spuItem in spu.spuSaleAttrValueList"
                   :key="spuItem.id"
+                  @click="saleAttrSelected(spuItem, spu.spuSaleAttrValueList)"
                 >
                   {{ spuItem.saleAttrValueName }}
                 </dd>
@@ -79,12 +80,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model.number="skuNum" @input="checkSkuNum"/>
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum <= 1 ? 1 : skuNum--">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addShopCar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -336,6 +337,7 @@ export default {
   data() {
     return {
       imgUrlIndex: 0,
+      skuNum: 1
     };
   },
   computed: {
@@ -361,6 +363,27 @@ export default {
     changeImgIndex(index) {
       this.imgUrlIndex = index;
     },
+    saleAttrSelected(spuItem, attrList) {
+      attrList.forEach(item => {
+        item.isChecked = '0'
+      })
+      spuItem.isChecked = '1'
+    },
+    // 检查skuNum的合法性
+    checkSkuNum() {
+      let num = this.skuNum
+      if (isNaN(num) || num < 1) {
+        this.skuNum = 1
+      } else {
+        if (num % 1 !== 0) {
+          this.skuNum = Math.floor(num)
+        }
+      }
+    },
+    // 添加购物车
+    addShopCar() {
+
+    }
   },
 };
 </script>
