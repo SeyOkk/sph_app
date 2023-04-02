@@ -1,5 +1,4 @@
-import { getGoodsDetail, addShopCart } from "@/api/detail";
-import { getUuidByLocalStorage } from "@/utils/UuidUtils";
+import { getGoodsDetail } from "@/api/detail";
 
 const state = {
   goodsDetail: {},
@@ -15,15 +14,6 @@ const actions = {
   async getGoodsDetail({ commit }, skuId) {
     let result = await getGoodsDetail(skuId);
     commit("GET_GOODS_DETAIL", result.data);
-  },
-  async saveShopCart({ commit }, { skuId, skuNum }) {
-    const userToken = getUuidByLocalStorage();
-    let res = await addShopCart(skuId, skuNum, userToken);
-    if (res.code === 200) {
-      return "ok";
-    } else {
-      return Promise.reject(new Error("fail"));
-    }
   },
 };
 
