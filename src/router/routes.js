@@ -3,6 +3,8 @@ import Login from "@/pages/login/index.vue";
 import Register from "@/pages/register/index.vue";
 import Search from "@/pages/search/index.vue";
 import Detail from "@/pages/detail/index.vue";
+import AddCartSuccess from "@/pages/shopcart/AddCartSuccess.vue";
+import ShopCart from "@/pages/shopcart/index.vue";
 
 export default [
   {
@@ -47,6 +49,24 @@ export default [
     name: "detail",
     path: "/detail/:id",
     component: Detail,
+    meta: {
+      isFooterShow: true,
+      typeNavFlag: true,
+    },
+  },
+  {
+    name: "AddCartSuccess",
+    path: "/AddCartSuccess/:skuNum",
+    component: AddCartSuccess,
+    meta: {
+      isFooterShow: true,
+      typeNavFlag: true,
+    },
+  },
+  {
+    name: "ShopCart",
+    path: "/shopCart",
+    component: ShopCart,
     meta: {
       isFooterShow: true,
       typeNavFlag: true,

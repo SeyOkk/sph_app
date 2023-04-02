@@ -11,7 +11,6 @@ const request = axios.create({
 request.interceptors.request.use((config) => {
   // 进度条开始
   nProgress.start();
-  // 配置对象，配置请求头等等
   return config;
 });
 
@@ -22,7 +21,7 @@ request.interceptors.response.use(
     nProgress.done();
     const result = success.data;
     if (result.code === 200) {
-      return result.data;
+      return result;
     } else {
       console.log("请求失败：", result.message);
     }

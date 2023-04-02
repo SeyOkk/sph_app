@@ -6,14 +6,14 @@ const state = {
 
 const mutations = {
   GET_SEARCH_DATA(state, payload) {
-    state.searchData = payload
-  }
+    state.searchData = payload;
+  },
 };
 
 const actions = {
   async getSearchData({ commit }, data = {}) {
     let result = await getSearchData(data);
-    commit("GET_SEARCH_DATA", result)
+    commit("GET_SEARCH_DATA", result.data);
   },
 };
 

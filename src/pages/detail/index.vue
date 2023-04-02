@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <!-- 商品分类导航 -->
-    <TypeNav />
+    <TypeNav/>
 
     <!-- 主要内容区域 -->
     <section class="con">
@@ -16,9 +16,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom :imgUrl="imgUrl" />
+          <Zoom :imgUrl="imgUrl"/>
           <!-- 小图列表 -->
-          <ImageList @changeImgIndex="changeImgIndex" :imgList="imgList" />
+          <ImageList @changeImgIndex="changeImgIndex" :imgList="imgList"/>
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -45,7 +45,7 @@
                 <div class="fixWidth">
                   <i class="red-bg">加价购</i>
                   <em class="t-gray"
-                    >满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em
+                  >满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em
                   >
                 </div>
               </div>
@@ -68,11 +68,11 @@
               <dl v-for="spu in spuSaleAttrList" :key="spu.id">
                 <dt class="title">{{ spu.saleAttrName }}</dt>
                 <dd
-                  changepirce="0"
-                  :class="{ active: spuItem.isChecked === '1' }"
-                  v-for="spuItem in spu.spuSaleAttrValueList"
-                  :key="spuItem.id"
-                  @click="saleAttrSelected(spuItem, spu.spuSaleAttrValueList)"
+                    changepirce="0"
+                    :class="{ active: spuItem.isChecked === '1' }"
+                    v-for="spuItem in spu.spuSaleAttrValueList"
+                    :key="spuItem.id"
+                    @click="saleAttrSelected(spuItem, spu.spuSaleAttrValueList)"
                 >
                   {{ spuItem.saleAttrValueName }}
                 </dd>
@@ -85,7 +85,7 @@
                 <a href="javascript:" class="mins" @click="skuNum <= 1 ? 1 : skuNum--">-</a>
               </div>
               <div class="add">
-                <a @click="addShopCar">加入购物车</a>
+                <a @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="@/assets/images/detail/part01.png" />
+                    <img src="@/assets/images/detail/part01.png"/>
                   </div>
                   <div class="attr">Apple苹果iPhone 6s (A1699)</div>
                   <div class="price">
@@ -131,7 +131,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="@/assets/images/detail/part02.png" />
+                    <img src="@/assets/images/detail/part02.png"/>
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -150,7 +150,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="@/assets/images/detail/part03.png" />
+                    <img src="@/assets/images/detail/part03.png"/>
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -169,7 +169,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="@/assets/images/detail/part02.png" />
+                    <img src="@/assets/images/detail/part02.png"/>
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -188,7 +188,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="@/assets/images/detail/part03.png" />
+                    <img src="@/assets/images/detail/part03.png"/>
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -216,40 +216,40 @@
           <h4 class="kt">选择搭配</h4>
           <div class="good-suits">
             <div class="master">
-              <img src="@/assets/images/detail/l-m01.png" />
+              <img src="@/assets/images/detail/l-m01.png"/>
               <p>￥5299</p>
               <i>+</i>
             </div>
             <ul class="suits">
               <li class="suitsItem">
-                <img src="@/assets/images/detail/dp01.png" />
+                <img src="@/assets/images/detail/dp01.png"/>
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="39" />
+                  <input type="checkbox" value="39"/>
                   <span>39</span>
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="@/assets/images/detail/dp02.png" />
+                <img src="@/assets/images/detail/dp02.png"/>
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="50" />
+                  <input type="checkbox" value="50"/>
                   <span>50</span>
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="@/assets/images/detail/dp03.png" />
+                <img src="@/assets/images/detail/dp03.png"/>
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="59" />
+                  <input type="checkbox" value="59"/>
                   <span>59</span>
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="@/assets/images/detail/dp04.png" />
+                <img src="@/assets/images/detail/dp04.png"/>
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="99" />
+                  <input type="checkbox" value="99"/>
                   <span>99</span>
                 </label>
               </li>
@@ -299,9 +299,9 @@
                 <li>机身内存：64GB</li>
               </ul>
               <div class="intro-detail">
-                <img src="@/assets/images/detail/intro01.png" />
-                <img src="@/assets/images/detail/intro02.png" />
-                <img src="@/assets/images/detail/intro03.png" />
+                <img src="@/assets/images/detail/intro01.png"/>
+                <img src="@/assets/images/detail/intro02.png"/>
+                <img src="@/assets/images/detail/intro03.png"/>
               </div>
             </div>
             <div id="two" class="tab-pane">
@@ -326,7 +326,7 @@
 <script>
 import ImageList from "./ImageList.vue";
 import Zoom from "./Zoom.vue";
-import { mapGetters, mapActions } from "vuex";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: "Detail",
@@ -358,7 +358,7 @@ export default {
     this.getGoodsDetail(this.$route.params.id);
   },
   methods: {
-    ...mapActions(["getGoodsDetail"]),
+    ...mapActions(["getGoodsDetail", "saveShopCart"]),
     // 变更图片下标
     changeImgIndex(index) {
       this.imgUrlIndex = index;
@@ -381,8 +381,15 @@ export default {
       }
     },
     // 添加购物车
-    addShopCar() {
-
+    async addShopCart() {
+      try { // 调用接口保存购物信息
+        await this.saveShopCart({skuId: this.$route.params.id, skuNum: this.skuNum})
+        sessionStorage.setItem("SHOPCART", JSON.stringify(this.goodsInfo))
+        // 跳转到购物成功页
+        this.$router.push(`/AddCartSuccess/${this.skuNum}`)
+      } catch (e) {
+        alert(e.messages)
+      }
     }
   },
 };
