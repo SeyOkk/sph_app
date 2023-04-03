@@ -3,48 +3,88 @@
     <h3>
       注册新用户
       <span class="go"
-        >我有账号，去 <a href="login.html" target="_blank">登陆</a>
+        >我有账号，去 <router-link to="/login" target="_blank">登陆</router-link>
       </span>
     </h3>
     <div class="content">
       <label>手机号:</label>
-      <input type="text" placeholder="请输入你的手机号" />
+      <input type="text" v-model="phone" placeholder="请输入你的手机号" />
       <span class="error-msg">错误提示信息</span>
     </div>
     <div class="content">
       <label>验证码:</label>
-      <input type="text" placeholder="请输入验证码" />
-      <img
-        ref="code"
-        src="http://182.92.128.115/api/user/passport/code"
-        alt="code"
-      />
+      <input type="text" v-model="code" placeholder="请输入验证码" />
+      <button @click="toSmsCode" class="btn-code">获取验证码</button>
       <span class="error-msg">错误提示信息</span>
     </div>
     <div class="content">
       <label>登录密码:</label>
-      <input type="text" placeholder="请输入你的登录密码" />
+      <input type="text" v-model="password" placeholder="请输入你的登录密码" />
       <span class="error-msg">错误提示信息</span>
     </div>
     <div class="content">
       <label>确认密码:</label>
-      <input type="text" placeholder="请输入确认密码" />
+      <input type="text" v-model="password_2" placeholder="请输入确认密码" />
       <span class="error-msg">错误提示信息</span>
     </div>
     <div class="controls">
-      <input name="m1" type="checkbox" />
+      <input name="m1" @change="agree" type="checkbox" />
       <span>同意协议并注册《尚品汇用户协议》</span>
       <span class="error-msg">错误提示信息</span>
     </div>
     <div class="btn">
-      <button>完成注册</button>
+      <button @click="handlerRegister">完成注册</button>
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "Register",
+  data() {
+    return {
+      phone: "",
+      code: "",
+      password: "",
+      password_2: "",
+      checked: false
+    }
+  },
+  computed: {
+  },
+  methods: {
+    ...mapActions(["sendSmsCode", "register"]),
+    // 发送短信验证码
+    async toSmsCode() {
+      if (this.phone) {
+        this.code = await this.sendSmsCode({phone: this.phone})
+      }
+    },
+    agree(event) {
+      this.checked = event.target.checked
+    },
+    // 注册
+    handlerRegister() {
+      // 参数校验
+      if (this.phone && this.password && this.password_2 && this.code) {
+        if (this.checked) {
+          if (this.password === this.password_2) {
+            this.register({phone: this.phone, password: this.password_2, code: this.code})
+            // 跳转登录页
+            this.$router.push("/login")
+          } else {
+            alert("前后密码不一致")
+          }
+        } else {
+          alert("请勾选协议")
+        }
+      } else {
+        alert("必填参数不能为空")
+      }
+    }
+  }
 };
 </script>
 
@@ -109,6 +149,13 @@ export default {
       top: 100%;
       left: 495px;
       color: red;
+    }
+
+    .btn-code {
+      height: 38px;
+      box-sizing: border-box;
+      outline: none;
+      border: 1px solid #999;
     }
   }
 

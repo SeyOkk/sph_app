@@ -20,11 +20,7 @@ request.interceptors.response.use(
     // 进度条结束
     nProgress.done();
     const result = success.data;
-    if (result.code === 200) {
-      return result;
-    } else {
-      console.log("请求失败：", result.message);
-    }
+    return result;
   },
   (error) => {
     nProgress.done();
