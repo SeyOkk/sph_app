@@ -1,4 +1,5 @@
 import request from "./index";
+import { getUuidByLocalStorage } from "@/utils/UuidUtils";
 
 //获取短信验证码
 export const sendSmsCode = (phone) =>
@@ -7,3 +8,13 @@ export const sendSmsCode = (phone) =>
 //用户注册
 export const register = (phone, password, code) =>
   request.post("/user/passport/register", { phone, password, code });
+
+//用户登录
+export const login = (data) => request.post("/user/passport/login", data);
+
+//获取用户信息
+export const getUserInfo = () =>
+  request.post("/user/passport/auth/getUserInfo");
+
+//退出登录
+export const logout = () => request.get("/user/passport/logout");

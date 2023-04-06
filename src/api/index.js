@@ -1,6 +1,7 @@
 import axios from "axios";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { getToken } from "@/utils/TokenUtils";
 
 const request = axios.create({
   baseURL: "/api",
@@ -11,6 +12,10 @@ const request = axios.create({
 request.interceptors.request.use((config) => {
   // 进度条开始
   nProgress.start();
+  const token = getToken();
+  if (token) {
+    config.headers.token = token;
+  }
   return config;
 });
 

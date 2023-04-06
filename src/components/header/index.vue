@@ -32,8 +32,18 @@
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input type="text" v-model="keyword" class="input-error input-xxlarge" />
-          <button @click="toSearch" class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+          <input
+            type="text"
+            v-model="keyword"
+            class="input-error input-xxlarge"
+          />
+          <button
+            @click="toSearch"
+            class="sui-btn btn-xlarge btn-danger"
+            type="button"
+          >
+            搜索
+          </button>
         </form>
       </div>
     </div>
@@ -50,7 +60,7 @@ export default {
   },
   mounted() {
     // 绑定全局事件
-    this.$bus.$on("resetKeyword", () => this.keyword = "")
+    this.$bus.$on("resetKeyword", () => (this.keyword = ""));
   },
   methods: {
     toSearch() {
@@ -66,7 +76,7 @@ export default {
         location.query = this.$route.query;
       }
       this.$router.push(location);
-    }
+    },
   },
 };
 </script>

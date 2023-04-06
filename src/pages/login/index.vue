@@ -12,16 +12,16 @@
         </ul>
 
         <div class="content">
-          <form action="##">
+          <form>
             <div class="input-text clearFix">
               <i></i>
-              <input type="text" placeholder="手机号" />
+              <input type="text" v-model="phone" placeholder="手机号" />
               <span class="error-msg">错误提示信息</span>
             </div>
 
             <div class="input-text clearFix">
               <i class="pwd"></i>
-              <input type="text" placeholder="请输入密码" />
+              <input type="text" v-model="password" placeholder="请输入密码" />
               <span class="error-msg">错误提示信息</span>
             </div>
 
@@ -32,7 +32,9 @@
               </label>
               <span class="forget">忘记密码？</span>
             </div>
-            <button class="btn">登&nbsp;&nbsp;录</button>
+            <button class="btn" @click.prevent="toLogin">
+              登&nbsp;&nbsp;录
+            </button>
           </form>
           <div class="call clearFix">
             <ul>
@@ -50,8 +52,36 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Login",
+  data() {
+    return {
+      phone: "",
+      password: "",
+    };
+  },
+  methods: {
+    ...mapActions(["login"]),
+    // 登录
+    toLogin() {
+      const { phone, password } = this;
+      if (phone && password) {
+        this.login({ phone, password })
+          .then((data) => {
+            alert("登录成功");
+            // 跳转到首页
+            this.$router.push("/home");
+          })
+          .catch((err) => {
+            alert(err);
+          });
+      } else {
+        alert("请先输入账号密码");
+      }
+    },
+  },
 };
 </script>
 
@@ -59,12 +89,14 @@ export default {
 .login-wrap {
   height: 487px;
   background-color: #e93854;
+
   .login {
     width: 1200px;
     height: 487px;
     margin: 0 auto;
     background: url(@/assets/images/login/loginbg.png) no-repeat;
   }
+
   .loginform {
     width: 420px;
     height: 406px;
@@ -74,11 +106,13 @@ export default {
     top: 45px;
     position: relative;
     padding: 20px;
+
     .tab {
       li {
         width: 50%;
         float: left;
         text-align: center;
+
         a {
           width: 100%;
           display: block;
@@ -91,6 +125,7 @@ export default {
           box-sizing: border-box;
           text-decoration: none;
         }
+
         .current {
           border-bottom: none;
           border-top-color: #28a3ef;
@@ -98,6 +133,7 @@ export default {
         }
       }
     }
+
     .content {
       width: 380px;
       height: 316px;
@@ -105,13 +141,16 @@ export default {
       border: 1px solid #ddd;
       border-top: none;
       padding: 18px;
+
       form {
         margin: 15px 0 18px 0;
         font-size: 12px;
         line-height: 18px;
+
         .input-text {
           margin-bottom: 22px;
           position: relative;
+
           i {
             float: left;
             width: 37px;
@@ -121,9 +160,11 @@ export default {
             box-sizing: border-box;
             border-radius: 2px 0 0 2px;
           }
+
           .pwd {
             background-position: -72px -201px;
           }
+
           input {
             width: 302px;
             height: 32px;
@@ -149,14 +190,17 @@ export default {
             color: red;
           }
         }
+
         .setting {
           label {
             float: left;
           }
+
           .forget {
             float: right;
           }
         }
+
         .btn {
           background-color: #e1251b;
           padding: 6px;
@@ -172,20 +216,25 @@ export default {
           outline: none;
         }
       }
+
       .call {
         margin-top: 30px;
+
         ul {
           float: left;
+
           li {
             float: left;
             margin-right: 5px;
           }
         }
+
         .register {
           float: right;
           font-size: 15px;
           line-height: 38px;
         }
+
         .register:hover {
           color: #4cb9fc;
           text-decoration: underline;
