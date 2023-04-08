@@ -77,7 +77,11 @@ const actions = {
   },
 };
 
-const getters = {};
+const getters = {
+  getUserName(state) {
+    return state.userInfo !== undefined ? state.userInfo.loginName : "";
+  },
+};
 
 export default {
   state,

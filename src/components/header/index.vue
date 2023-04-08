@@ -6,9 +6,17 @@
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
           <p>
-            <span>请</span>
-            <router-link to="/login">登录</router-link>
-            <router-link to="/register" class="register">免费注册</router-link>
+            <span v-if="getUserName">
+              <span style="margin-right: 5px">{{ getUserName }}</span>
+              <a @click="toLogout">退出登录</a>
+            </span>
+            <span v-else>
+              <span>请</span>
+              <router-link to="/login">登录</router-link>
+              <router-link to="/register" class="register"
+                >免费注册</router-link
+              >
+            </span>
           </p>
         </div>
         <div class="typeList">
@@ -51,6 +59,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Header",
   data() {
@@ -62,7 +72,11 @@ export default {
     // 绑定全局事件
     this.$bus.$on("resetKeyword", () => (this.keyword = ""));
   },
+  computed: {
+    ...mapGetters(["getUserName"]),
+  },
   methods: {
+    ...mapActions(["logout"]),
     toSearch() {
       let location = {
         name: "search",
@@ -76,6 +90,9 @@ export default {
         location.query = this.$route.query;
       }
       this.$router.push(location);
+    },
+    async toLogout() {
+      await this.logout();
     },
   },
 };

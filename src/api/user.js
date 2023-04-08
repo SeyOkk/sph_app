@@ -13,8 +13,7 @@ export const register = (phone, password, code) =>
 export const login = (data) => request.post("/user/passport/login", data);
 
 //获取用户信息
-export const getUserInfo = () =>
-  request.post("/user/passport/auth/getUserInfo");
+export const getUserInfo = () => request.get("/user/passport/auth/getUserInfo");
 
 //退出登录
 export const logout = () => request.get("/user/passport/logout");
