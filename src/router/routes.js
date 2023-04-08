@@ -5,6 +5,9 @@ import Search from "@/pages/search/index.vue";
 import Detail from "@/pages/detail/index.vue";
 import AddCartSuccess from "@/pages/shopcart/AddCartSuccess.vue";
 import ShopCart from "@/pages/shopcart/index.vue";
+import Trade from "@/pages/trade/index.vue";
+import Pay from "@/pages/pay/index.vue";
+import PaySuccess from "@/pages/pay/PaySuccess.vue";
 
 export default [
   {
@@ -67,6 +70,33 @@ export default [
     name: "ShopCart",
     path: "/shopCart",
     component: ShopCart,
+    meta: {
+      isFooterShow: true,
+      typeNavFlag: true,
+    },
+  },
+  {
+    name: "Trade",
+    path: "/trade",
+    component: Trade,
+    meta: {
+      isFooterShow: true,
+      typeNavFlag: true,
+    },
+  },
+  {
+    name: "Pay",
+    path: "/pay",
+    component: Pay,
+    meta: {
+      isFooterShow: true,
+      typeNavFlag: true,
+    },
+  },
+  {
+    name: "PaySuccess",
+    path: "/PaySuccess",
+    component: PaySuccess,
     meta: {
       isFooterShow: true,
       typeNavFlag: true,

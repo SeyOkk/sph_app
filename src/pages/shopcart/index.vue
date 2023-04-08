@@ -13,36 +13,65 @@
       <div class="cart-body">
         <ul v-for="cart in getCartInfoList" :key="cart.id" class="cart-list">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" @change="updateCheckState(cart.skuId, $event.target.checked)" :checked="cart.isChecked === 1">
+            <input
+              type="checkbox"
+              name="chk_list"
+              @change="updateCheckState(cart.skuId, $event.target.checked)"
+              :checked="cart.isChecked === 1"
+            />
           </li>
           <li class="cart-list-con2">
-            <img :src="cart.imgUrl">
+            <img :src="cart.imgUrl" />
             <div class="item-msg">{{ cart.skuName }}</div>
           </li>
           <li class="cart-list-con4">
             <span class="price">{{ cart.skuPrice }}</span>
           </li>
           <li class="cart-list-con5">
-            <a class="mins" @click="throttleChangeSkuNum('mins', cart.skuId, cart.skuNum)">-</a>
-            <input class="itxt" @input="throttleChangeSkuNum('input', cart.skuId, $event.target.value, cart.skuNum)"
-                   autocomplete="off" type="text" :value="cart.skuNum">
-            <a class="plus" @click="throttleChangeSkuNum('plus', cart.skuId, cart.skuNum)">+</a>
+            <a
+              class="mins"
+              @click="throttleChangeSkuNum('mins', cart.skuId, cart.skuNum)"
+              >-</a
+            >
+            <input
+              class="itxt"
+              @input="
+                throttleChangeSkuNum(
+                  'input',
+                  cart.skuId,
+                  $event.target.value,
+                  cart.skuNum
+                )
+              "
+              autocomplete="off"
+              type="text"
+              :value="cart.skuNum"
+            />
+            <a
+              class="plus"
+              @click="throttleChangeSkuNum('plus', cart.skuId, cart.skuNum)"
+              >+</a
+            >
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ cart.skuPrice * cart.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
             <a @click="removeCart(cart.skuId)" class="sindelet">删除</a>
-            <br>
+            <br />
             <a href="#none">移到收藏</a>
           </li>
         </ul>
-
       </div>
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" @change="updateAllCheckState($event.target.checked)" :checked="allChecked">
+        <input
+          class="chooseAll"
+          type="checkbox"
+          @change="updateAllCheckState($event.target.checked)"
+          :checked="allChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
@@ -51,15 +80,16 @@
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择
-          <span>{{ totalCheckedNum }}</span>件商品
+        <div class="chosed">
+          已选择 <span>{{ totalCheckedNum }}</span
+          >件商品
         </div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <router-link class="sum-btn" to="/trade">结算</router-link>
         </div>
       </div>
     </div>
@@ -67,98 +97,109 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-import throttle from 'lodash/throttle'
+import { mapActions, mapGetters } from "vuex";
+import throttle from "lodash/throttle";
 
 export default {
-  name: 'ShopCart',
+  name: "ShopCart",
   mounted() {
-    this.getCartList()
+    this.getCartList();
   },
   computed: {
-    ...mapGetters(['getCartInfoList']),
+    ...mapGetters(["getCartInfoList"]),
     totalPrice() {
       return this.getCartInfoList
-          .filter(item => item.isChecked === 1)
-          .map(item => item.skuPrice * item.skuNum)
-          .reduce((a, b) => a + b, 0)
+        .filter((item) => item.isChecked === 1)
+        .map((item) => item.skuPrice * item.skuNum)
+        .reduce((a, b) => a + b, 0);
     },
     allChecked() {
-      return this.getCartInfoList.every(item => item.isChecked === 1) && this.getCartInfoList.length > 0
+      return (
+        this.getCartInfoList.every((item) => item.isChecked === 1) &&
+        this.getCartInfoList.length > 0
+      );
     },
     totalCheckedNum() {
-      return this.getCartInfoList.filter(item => item.isChecked === 1).length
-    }
+      return this.getCartInfoList.filter((item) => item.isChecked === 1).length;
+    },
   },
   methods: {
-    ...mapActions(['getCartList', "saveShopCart", "removeShopCart", "changeCheckCart"]),
+    ...mapActions([
+      "getCartList",
+      "saveShopCart",
+      "removeShopCart",
+      "changeCheckCart",
+    ]),
     // 改变商品数量,使用节流
     throttleChangeSkuNum: throttle(function (type, skuId, inputSkuNum, skuNum) {
       // skuNum合法性校验，非整数、负数、小数 都不会发请求更新skuNum
-      inputSkuNum = inputSkuNum * 1
-      if (isNaN(inputSkuNum) || inputSkuNum % 1 !== 0) inputSkuNum = 0
+      inputSkuNum = inputSkuNum * 1;
+      if (isNaN(inputSkuNum) || inputSkuNum % 1 !== 0) inputSkuNum = 0;
       // 变更的商品数量
       switch (type) {
-        case 'mins':
-          inputSkuNum = (inputSkuNum === 0 || inputSkuNum <= 1) ? 0 : -1
-          break
-        case 'plus':
-          inputSkuNum = inputSkuNum !== 0 ? 1 : 0
-          break
-        case 'input':
-          inputSkuNum = (inputSkuNum <= 0 || inputSkuNum - skuNum === 0) ? 0 : inputSkuNum - skuNum
-          break
+        case "mins":
+          inputSkuNum = inputSkuNum === 0 || inputSkuNum <= 1 ? 0 : -1;
+          break;
+        case "plus":
+          inputSkuNum = inputSkuNum !== 0 ? 1 : 0;
+          break;
+        case "input":
+          inputSkuNum =
+            inputSkuNum <= 0 || inputSkuNum - skuNum === 0
+              ? 0
+              : inputSkuNum - skuNum;
+          break;
       }
       try {
         if (inputSkuNum !== 0) {
-          this.updateShopCart(skuId, inputSkuNum)
+          this.updateShopCart(skuId, inputSkuNum);
         }
       } catch (e) {
-        alert(e.messages)
+        alert(e.messages);
       }
     }, 1000),
     async updateShopCart(skuId, skuNum) {
-      await this.saveShopCart({skuId, skuNum})
-      this.getCartList()
+      await this.saveShopCart({ skuId, skuNum });
+      this.getCartList();
     },
     // 移除商品
     async removeCart(skuId) {
       try {
-        await this.removeShopCart({skuId})
-        this.getCartList()
+        await this.removeShopCart({ skuId });
+        this.getCartList();
       } catch (e) {
-        alert(e.messages)
+        alert(e.messages);
       }
     },
     // 变更商品选中状态
     async updateCheckState(skuId, checked) {
-      checked = checked ? "1" : "0"
+      checked = checked ? "1" : "0";
       try {
-        await this.changeCheckCart({skuId, isChecked: checked})
-        this.getCartList()
+        await this.changeCheckCart({ skuId, isChecked: checked });
+        this.getCartList();
       } catch (e) {
         console.log(e.messages);
       }
     },
     // 变更所有商品的选中状态
     updateAllCheckState(checked) {
-      const isChecked = checked ? "1" : "0"
-      this.getCartInfoList.forEach(item => {
+      const isChecked = checked ? "1" : "0";
+      this.getCartInfoList.forEach((item) => {
         if (item.isChecked !== isChecked) {
-          this.updateCheckState(item.skuId, checked)
+          this.updateCheckState(item.skuId, checked);
         }
-      })
+      });
     },
     // 删除所有选中的商品
     deleteAllChecked() {
-      this.getCartInfoList.forEach(item => {
+      this.getCartInfoList.forEach((item) => {
         if (item.isChecked === 1) {
-          this.removeCart(item.skuId)
+          this.removeCart(item.skuId);
         }
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -204,7 +245,6 @@ export default {
       .cart-th5,
       .cart-th6 {
         width: 12.5%;
-
       }
     }
 
@@ -244,7 +284,6 @@ export default {
 
         .cart-list-con4 {
           width: 10%;
-
         }
 
         .cart-list-con5 {

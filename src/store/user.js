@@ -79,7 +79,7 @@ const actions = {
 
 const getters = {
   getUserName(state) {
-    return state.userInfo !== undefined ? state.userInfo.loginName : "";
+    return state.userInfo === null || undefined ? "" : state.userInfo.loginName;
   },
 };
 

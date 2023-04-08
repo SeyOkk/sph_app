@@ -6,15 +6,23 @@ import store from "./store";
 import "./mock/MockServer";
 // 引入全局组件
 import "@/components/ComponentRegister";
+// 引入api
+import * as api from "@/api/AllApi";
+// 按需引入element-ui
+import "./plugins/element-ui";
 
 Vue.config.productionTip = false;
 
-new Vue({
+let vm = new Vue({
   render: (h) => h(App),
   router,
   store,
   beforeCreate() {
     // 原型对象上挂载事件总线
     Vue.prototype.$bus = this;
+    // 原型对象上挂载api
+    Vue.prototype.$api = api;
   },
 }).$mount("#app");
+
+export default vm;
