@@ -2,27 +2,45 @@
   <div class="fr page">
     <div class="sui-pagination clearfix">
       <ul>
-        <li class="prev" @click="$emit('prePage')" v-show="pageNo !== 1">
+        <li
+          class="prev"
+          @click="$emit('jumpPage', --pageNo)"
+          v-show="pageNo !== 1"
+        >
           <a href="#">«上一页</a>
         </li>
 
-        <li v-if="handlerContinuesPage.start !== 1" @click="$emit('jumpPage', 1)">
+        <li
+          v-if="handlerContinuesPage.start !== 1"
+          @click="$emit('jumpPage', 1)"
+        >
           <a href="#">1</a>
         </li>
         <li v-if="isShowFirst" class="dotted"><span>...</span></li>
 
-        <li v-for="(count, index) in handlerContinuesPage.end" :key="index"
-            v-show="handlerContinuesPage.start <= count"
-            :class="{active: pageNo === count}" @click="$emit('jumpPage', count)">
+        <li
+          v-for="(count, index) in handlerContinuesPage.end"
+          :key="index"
+          v-show="handlerContinuesPage.start <= count"
+          :class="{ active: pageNo === count }"
+          @click="$emit('jumpPage', count)"
+        >
           <a href="#"> {{ count }} </a>
         </li>
 
         <li v-if="isShowEnd" class="dotted"><span>...</span></li>
-        <li v-if="handlerContinuesPage.end !== totalPage" @click="$emit('jumpPage', totalPage)">
+        <li
+          v-if="handlerContinuesPage.end !== totalPage"
+          @click="$emit('jumpPage', totalPage)"
+        >
           <a href="#"> {{ totalPage }} </a>
         </li>
 
-        <li class="next" @click="$emit('nextPage')" v-show="pageNo !== totalPage">
+        <li
+          class="next"
+          @click="$emit('jumpPage', ++pageNo)"
+          v-show="pageNo !== totalPage"
+        >
           <a href="#">下一页»</a>
         </li>
       </ul>
@@ -47,45 +65,48 @@ export default {
     },
     continues: {
       type: Number,
-      default: 5
+      default: 5,
     },
   },
   computed: {
     // 计算当前总计多少页
     totalPage() {
-      return this.total % this.pageSize === 0 ? this.total / this.pageSize : Math.ceil(this.total / this.pageSize);
+      return this.total % this.pageSize === 0
+        ? this.total / this.pageSize
+        : Math.ceil(this.total / this.pageSize);
     },
     // 计算连续的起始和结束页码
     handlerContinuesPage() {
-      let start = 0, end = 0
+      let start = 0,
+        end = 0;
 
       // 判断连续页码数 是否 大于 总页数
       if (this.continues > this.totalPage) {
-        start = 1
-        end = this.totalPage
+        start = 1;
+        end = this.totalPage;
       } else {
-        const intervalCount = Math.floor(this.continues / 2)
-        start = this.pageNo - intervalCount
-        end = this.pageNo + intervalCount
+        const intervalCount = Math.floor(this.continues / 2);
+        start = this.pageNo - intervalCount;
+        end = this.pageNo + intervalCount;
         // 处理start
         if (start < 1) {
-          start = 1
-          end = this.continues
+          start = 1;
+          end = this.continues;
         }
         // 处理end
         if (end > this.totalPage) {
-          end = this.totalPage
-          start = this.totalPage - this.continues + 1
+          end = this.totalPage;
+          start = this.totalPage - this.continues + 1;
         }
       }
-      return {start, end}
+      return { start, end };
     },
     isShowFirst() {
-      return this.pageNo > Math.ceil(this.continues / 2) + 1
+      return this.pageNo > Math.ceil(this.continues / 2) + 1;
     },
     isShowEnd() {
-      return this.pageNo < this.totalPage - Math.ceil(this.continues / 2)
-    }
+      return this.pageNo < this.totalPage - Math.ceil(this.continues / 2);
+    },
   },
 };
 </script>

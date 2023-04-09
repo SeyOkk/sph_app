@@ -17,3 +17,7 @@ export const getUserInfo = () => request.get("/user/passport/auth/getUserInfo");
 
 //退出登录
 export const logout = () => request.get("/user/passport/logout");
+
+//获取我的订单列表
+export const getMyOrder = (page, limit) =>
+  request.get(`/order/auth/${page}/${limit}`);

@@ -136,13 +136,15 @@ export default {
             beforeClose: (type, instance, done) => {
               if (type === "confirm") {
                 // 确认支付
-                if (this.payState === 200) {
-                  // 关闭弹出框
-                  done();
-                  this.$message.success("支付成功");
-                  // 路由跳转
-                  this.$router.push("/PaySuccess");
-                }
+                // if (this.payState === 200) {
+                // 关闭弹出框
+                done();
+                this.$message.success("支付成功");
+                // 路由跳转
+                this.$router.push("/PaySuccess");
+                clearInterval(this.timer);
+                this.timer = null;
+                // }
               } else {
                 // 取消支付
                 // 清除定时器，关闭弹出框
@@ -155,7 +157,7 @@ export default {
           });
         })
         .catch((err) => {
-          console.log(err);
+          this.$message.error(err);
         });
 
       this.timer = setInterval(async () => {

@@ -8,6 +8,8 @@ import ShopCart from "@/pages/shopcart/index.vue";
 import Trade from "@/pages/trade/index.vue";
 import Pay from "@/pages/pay/index.vue";
 import PaySuccess from "@/pages/pay/PaySuccess.vue";
+import Center from "@/pages/center/index.vue";
+import MyOrder from "@/pages/center/MyOrder.vue";
 
 export default [
   {
@@ -101,5 +103,24 @@ export default [
       isFooterShow: true,
       typeNavFlag: true,
     },
+  },
+  {
+    name: "Center",
+    path: "/center",
+    component: Center,
+    meta: {
+      isFooterShow: true,
+      typeNavFlag: true,
+    },
+    children: [
+      {
+        path: "",
+        redirect: "my-order",
+      },
+      {
+        path: "my-order",
+        component: MyOrder,
+      },
+    ],
   },
 ];

@@ -160,7 +160,7 @@ export default {
         // 路由跳转
         this.$router.push(`/pay?orderNo=${result.data}`);
       } else {
-        console.log(result.message);
+        this.$message.error(result.message);
       }
     },
   },

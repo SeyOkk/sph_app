@@ -22,7 +22,12 @@
               {{ searchQuery.trademark.split(":")[1] }}
               <i @click="removeTrademark">×</i>
             </li>
-            <li class="with-x" v-show="searchQuery.props" v-for="(prop, index) in searchQuery.props" :key="index">
+            <li
+              class="with-x"
+              v-show="searchQuery.props"
+              v-for="(prop, index) in searchQuery.props"
+              :key="index"
+            >
               {{ prop.split(":")[1] }} <i @click="removeAttr(index)">×</i>
             </li>
           </ul>
@@ -75,8 +80,6 @@
           :pageNo="searchData.pageNo"
           :pageSize="searchData.pageSize"
           :total="searchData.total"
-          @prePage="prePage"
-          @nextPage="nextPage"
           @jumpPage="jumpPage"
         />
 
@@ -286,14 +289,6 @@ export default {
     },
     jumpPage(pageNo) {
       this.searchQuery.pageNo = pageNo;
-      this.getSearchData();
-    },
-    prePage() {
-      this.searchQuery.pageNo--;
-      this.getSearchData();
-    },
-    nextPage() {
-      this.searchQuery.pageNo++;
       this.getSearchData();
     },
   },
