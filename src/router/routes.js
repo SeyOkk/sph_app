@@ -1,16 +1,3 @@
-import Home from "@/pages/home/index.vue";
-import Login from "@/pages/login/index.vue";
-import Register from "@/pages/register/index.vue";
-import Search from "@/pages/search/index.vue";
-import Detail from "@/pages/detail/index.vue";
-import AddCartSuccess from "@/pages/shopcart/AddCartSuccess.vue";
-import ShopCart from "@/pages/shopcart/index.vue";
-import Trade from "@/pages/trade/index.vue";
-import Pay from "@/pages/pay/index.vue";
-import PaySuccess from "@/pages/pay/PaySuccess.vue";
-import Center from "@/pages/center/index.vue";
-import MyOrder from "@/pages/center/MyOrder.vue";
-
 export default [
   {
     path: "*",
@@ -19,7 +6,7 @@ export default [
   {
     name: "home",
     path: "/home",
-    component: Home,
+    component: () => import("@/pages/home/index.vue"),
     meta: {
       isFooterShow: true,
     },
@@ -27,7 +14,7 @@ export default [
   {
     name: "login",
     path: "/login",
-    component: Login,
+    component: () => import("@/pages/login/index.vue"),
     meta: {
       isFooterShow: false,
     },
@@ -35,7 +22,7 @@ export default [
   {
     name: "register",
     path: "/register",
-    component: Register,
+    component: () => import("@/pages/register/index.vue"),
     meta: {
       isFooterShow: false,
     },
@@ -44,7 +31,7 @@ export default [
     name: "search",
     // :keyword? 表示params参数 keyword 非必传
     path: `/search/:keyword?`,
-    component: Search,
+    component: () => import("@/pages/search/index.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
@@ -53,7 +40,7 @@ export default [
   {
     name: "detail",
     path: "/detail/:id",
-    component: Detail,
+    component: () => import("@/pages/detail/index.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
@@ -62,7 +49,7 @@ export default [
   {
     name: "AddCartSuccess",
     path: "/AddCartSuccess/:skuNum",
-    component: AddCartSuccess,
+    component: () => import("@/pages/shopcart/AddCartSuccess.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
@@ -71,7 +58,7 @@ export default [
   {
     name: "ShopCart",
     path: "/shopCart",
-    component: ShopCart,
+    component: () => import("@/pages/shopcart/index.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
@@ -80,37 +67,50 @@ export default [
   {
     name: "Trade",
     path: "/trade",
-    component: Trade,
+    component: () => import("@/pages/trade/index.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
+      isLogin: true,
+    },
+    beforeEnter(to, from, next) {
+      from.path.includes("/shopCart") ? next() : next(false);
     },
   },
   {
     name: "Pay",
     path: "/pay",
-    component: Pay,
+    component: () => import("@/pages/pay/index.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
+      isLogin: true,
+    },
+    beforeEnter(to, from, next) {
+      from.path.includes("/trade") ? next() : next(false);
     },
   },
   {
     name: "PaySuccess",
     path: "/PaySuccess",
-    component: PaySuccess,
+    component: () => import("@/pages/pay/PaySuccess.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
+      isLogin: true,
+    },
+    beforeEnter(to, from, next) {
+      from.path.includes("/pay") ? next() : next(false);
     },
   },
   {
     name: "Center",
     path: "/center",
-    component: Center,
+    component: () => import("@/pages/center/index.vue"),
     meta: {
       isFooterShow: true,
       typeNavFlag: true,
+      isLogin: true,
     },
     children: [
       {
@@ -119,7 +119,10 @@ export default [
       },
       {
         path: "my-order",
-        component: MyOrder,
+        component: () => import("@/pages/center/MyOrder.vue"),
+        meta: {
+          isLogin: true,
+        },
       },
     ],
   },

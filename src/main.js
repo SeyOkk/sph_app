@@ -10,6 +10,8 @@ import "@/components/ComponentRegister";
 import * as api from "@/api/AllApi";
 // 按需引入element-ui
 import "./plugins/element-ui";
+// 引入图片懒加载插件
+import "./plugins/vue-lazyload";
 
 Vue.config.productionTip = false;
 

@@ -70,15 +70,15 @@ export default {
       if (phone && password) {
         this.login({ phone, password })
           .then((data) => {
-            alert("登录成功");
+            this.$message.success("登录成功");
             // 跳转到首页
             this.$router.push("/home");
           })
           .catch((err) => {
-            alert(err);
+            this.$message.error(err);
           });
       } else {
-        alert("请先输入账号密码");
+        this.$message.error("账号或密码为空");
       }
     },
   },

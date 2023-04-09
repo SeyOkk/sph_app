@@ -6,7 +6,7 @@
           <div class="list-wrap">
             <div class="p-img">
               <router-link :to="`/detail/${goods.id}`">
-                <img :src="goods.defaultImg"/>
+                <img v-lazy="goods.defaultImg" />
               </router-link>
             </div>
             <div class="price">
@@ -16,25 +16,20 @@
               </strong>
             </div>
             <div class="attr">
-              <a
-                  target="_blank"
-                  href="item.html"
-                  v-html="goods.title"
-              >
-              </a>
+              <a target="_blank" href="item.html" v-html="goods.title"> </a>
             </div>
             <div class="commit">
               <i class="command">已有<span>2000</span>人评价</i>
             </div>
             <div class="operate">
               <a
-                  href="success-cart.html"
-                  target="_blank"
-                  class="sui-btn btn-bordered btn-danger"
-              >加入购物车</a
+                href="success-cart.html"
+                target="_blank"
+                class="sui-btn btn-bordered btn-danger"
+                >加入购物车</a
               >
               <a href="javascript:void(0);" class="sui-btn btn-bordered"
-              >收藏</a
+                >收藏</a
               >
             </div>
           </div>
@@ -49,9 +44,9 @@ export default {
   name: "GoodsList",
   props: {
     goodsList: {
-      type: Array
-    }
-  }
+      type: Array,
+    },
+  },
 };
 </script>
 
@@ -177,6 +172,5 @@ export default {
       }
     }
   }
-
 }
 </style>

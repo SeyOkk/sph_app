@@ -59,8 +59,11 @@ vueRouter.beforeEach(async (to, from, next) => {
       next();
     }
   } else {
-    // todo 暂时全放行
-    next();
+    if (to.meta.isLogin) {
+      next(false);
+    } else {
+      next();
+    }
   }
 });
 
