@@ -3,6 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
   productionSourceMap: false,
+  publicPath: "/sph_app",
   // 配置代理服务器
   devServer: {
     proxy: {

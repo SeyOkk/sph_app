@@ -37,6 +37,7 @@ VueRouter.prototype.replace = function (localtion, resovle, reject) {
 };
 
 let vueRouter = new VueRouter({
+  base: "/sph_app",
   routes,
   scrollBehavior(to, from, savedPosition) {
     return { y: 0 };
