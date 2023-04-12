@@ -39,7 +39,7 @@ pipeline {
                         remote.password = "${password}"
                     }
                     sshRemove remote: remote, path: '/opt/docker/nginx/html/${APP_NAME}'
-                    sshPut remote: remote, from: "${JENKINS_HOME}/${APP_NAME}-pipeline_${params.BRANCH}/dist_${APP_NAME}.tar.gz", into: '/opt/docker/nginx/html/'
+                    sshPut remote: remote, from: "${JENKINS_HOME}/${APP_NAME}_pipeline_${params.BRANCH}/dist_${APP_NAME}.tar.gz", into: '/opt/docker/nginx/html/'
                     sshCommand remote: remote, command: "cd /opt/docker/nginx/html/ && tar -xvf ./dist_${APP_NAME}.tar.gz && mv dist ${APP_NAME}"
                 }
             }
