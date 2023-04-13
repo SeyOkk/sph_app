@@ -40,7 +40,8 @@ pipeline {
                     }
                     sshRemove remote: remote, path: '/opt/docker/nginx/html/${APP_NAME}'
                     sshPut remote: remote, from: "${JENKINS_HOME}/${APP_NAME}_pipeline_${params.BRANCH}/dist_${APP_NAME}.tar.gz", into: '/opt/docker/nginx/html/'
-                    sshCommand remote: remote, command: "cd /opt/docker/nginx/html/ && tar -xvf ./dist_${APP_NAME}.tar.gz && mv dist ${APP_NAME}"
+                    sshCommand remote: remote, command: "cd /opt/docker/nginx/html/ && tar -xvf ./dist_${APP_NAME}.tar.gz && mv dist_${APP_NAME} ${APP_NAME}"
+                    sshRemove remote: remote, command: "/opt/docker/nginx/html/dist_${APP_NAME}.tar.gz"
                 }
             }
         }
