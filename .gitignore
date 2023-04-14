@@ -2,6 +2,7 @@
 node_modules
 /dist
 
+.scannerwork
 
 # local env files
 .env.local
